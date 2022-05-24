@@ -135,8 +135,8 @@ public struct Message {
     self.timestamp = (json["timestamp"] as! String).date
     self.isTts = json["tts"] as! Bool
     
-    if let type = json["type"] as? Int {
-      self.type = Type(rawValue: type)!
+    if let type = Type(rawValue: (json["type"] as? Int) ?? 0) {
+        self.type = type
     }else {
       self.type = Type(rawValue: 0)!
     }
