@@ -70,7 +70,7 @@ public struct Message {
   /// If message was sent by webhook, this is that webhook's ID
   public let webhookId: Snowflake?
     
-  public let parent: Message?
+  public let parent: [Message]?
 
   // MARK: Initializer
 
@@ -87,7 +87,7 @@ public struct Message {
     }
       
     if let json = json["referenced_message"] as? [String:Any] {
-        self.parent = Message(sword, json)
+        self.parent = [Message(sword, json)]
     } else {
         self.parent = nil
     }
