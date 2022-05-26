@@ -2131,9 +2131,21 @@ open class Sword: Eventable {
 
   public func create(
     thread: String,
-    from message: Message,
+    for message: Message,
     then completion: ((Any?, RequestError?) -> ())? = nil
   ) { request(.createThread(message.channel.id, message.id), body: ["name":thread]) { completion?($0, $1) } }
+    
+  public func create(
+    thread: String,
+    for messageId: Snowflake,
+    in channelId: Snowflake,
+    then completion: ((Any?, RequestError?) -> ())? = nil
+  ) {
+      request(
+        .createThread(channelId, messageId),
+        body: ["name" : thread, "auto_archive_duration" : 60]
+      ) { completion?($0, $1) }
+  }
     
 }
 
