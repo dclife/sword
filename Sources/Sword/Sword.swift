@@ -2133,7 +2133,7 @@ open class Sword: Eventable {
     thread: String,
     from message: Message,
     then completion: ((Any?, RequestError?) -> ())? = nil
-  ) { request(.createThread(message.channel.id, message.id)) { completion?($0, $1) } }
+  ) { request(.createThread(message.channel.id, message.id), body: ["name":thread]) { completion?($0, $1) } }
     
 }
 
