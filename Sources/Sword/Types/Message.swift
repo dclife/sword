@@ -88,6 +88,8 @@ public struct Message {
       
     if let json = json["referenced_message"] as? [String:Any] {
         self.parent = Message(sword, json)
+    } else {
+        self.parent = nil
     }
 
     if json["webhook_id"] == nil {
