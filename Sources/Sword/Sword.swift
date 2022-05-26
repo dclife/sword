@@ -2131,9 +2131,9 @@ open class Sword: Eventable {
 
   public func create(
     thread: String,
-    _ message: Message,
-    from channel: Channel,
-    then completion: ((RequestError?) -> ())? = nil
-  ) { request(.deletePinnedChannelMessage(channel.id, message.id)) { completion?($1);_ = $0 } }
+    from message: Message,
+    then completion: ((Any?, RequestError?) -> ())? = nil
+  ) { request(.createThread(message.channel.id, message.id)) { completion?($0, $1) } }
     
 }
+
