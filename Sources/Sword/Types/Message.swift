@@ -24,6 +24,9 @@ public struct Message {
 
   /// Channel struct of the message
   public let channel: TextChannel
+    
+  /// Channel struct of the message
+  public let guild: Guild?
 
   /// If message was edited, this is the time it happened
   public let editedTimestamp: Date?
@@ -66,6 +69,8 @@ public struct Message {
   
   /// If message was sent by webhook, this is that webhook's ID
   public let webhookId: Snowflake?
+    
+  public let parent: Message?
 
   // MARK: Initializer
 
@@ -80,6 +85,10 @@ public struct Message {
     for attachment in attachments {
       self.attachments.append(Attachment(attachment))
     }
+      
+    if let json = json["referenced_message"] as? [String:Any] {
+        self.parent = Message(sword, json)
+    }
 
     if json["webhook_id"] == nil {
       self.author = User(sword, json["author"] as! [String: Any])
@@ -90,6 +99,7 @@ public struct Message {
     self.content = json["content"] as! String
 
     self.channel = sword.getChannel(for: Snowflake(json["channel_id"])!)! as! TextChannel
+    self.guild = sword.getGuild(for: channel.id)
 
     if let editedTimestamp = json["edited_timestamp"] as? String {
       self.editedTimestamp = editedTimestamp.date
