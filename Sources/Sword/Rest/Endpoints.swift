@@ -7,6 +7,8 @@
 //
 
 enum Endpoint {
+    
+  case createThread(Snowflake, Snowflake)
 
   case gateway
 

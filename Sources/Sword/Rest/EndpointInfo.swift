@@ -12,6 +12,9 @@ extension Endpoint {
 
   var httpInfo: EndpointInfo {
     switch self {
+        
+      case let .createThread(channel, message):
+        return (.post, "/channels/\(channel)/messages/\(message)/threads")
 
       case .gateway:
         return (.get, "/gateway/bot")
